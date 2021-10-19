@@ -3,12 +3,17 @@ package com.test.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.absolutePadding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,12 +44,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+    Text(text = "Hello $name!",
+    modifier = Modifier.fillMaxWidth()
+        .absolutePadding(8.dp, 38.dp, 0.dp, 0.dp))
 }
 
 @Composable
 fun Profile(navController: NavController) {
-    Button(onClick = { navController.navigate("friends_list") }) {
+    Button(
+        onClick = { navController.navigate("friends_list") },
+        modifier = Modifier.fillMaxWidth()
+            .padding(8.dp, 0.dp, 0.dp, 0.dp)
+    ) {
         Text(text = "Navigate next1")
     }
 }
