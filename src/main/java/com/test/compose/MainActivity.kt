@@ -53,7 +53,7 @@ fun Greeting(name: String) {
 fun Profile(navController: NavController) {
     Button(
         onClick = { navController.navigate("friends_list") },
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
             .padding(8.dp, 0.dp, 0.dp, 0.dp)
     ) {
         Text(text = "Navigate next1")
@@ -62,7 +62,11 @@ fun Profile(navController: NavController) {
 
 @Composable
 fun FriendsList(navController: NavController) {
-    Button(onClick = { navController.navigate("profile") }) {
+    Button(
+        onClick = { navController.navigate("profile")},
+        modifier = Modifier
+            .padding(8.dp, 0.dp, 0.dp, 0.dp)
+    ) {
         Text(text = "Navigate next2")
     }
 }
