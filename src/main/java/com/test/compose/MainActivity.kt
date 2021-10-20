@@ -30,12 +30,10 @@ class MainActivity : ComponentActivity() {
                 Surface(color = MaterialTheme.colors.background) {
                     val navController = rememberNavController()
 
-                    NavHost(navController = navController, startDestination = "profile") {
-                        composable("profile") { Profile(navController) }
-                        composable("friends_list") { FriendsList(navController) }
-                        /*...*/
+                    NavHost(navController = navController, startDestination = "navigate1") {
+                        composable("navigate1") { Navigate1(navController) }
+                        composable("navigate2") { Navigate2(navController) }
                     }
-                    Greeting("Android")
                 }
             }
         }
@@ -45,30 +43,37 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name!",
-    modifier = Modifier.fillMaxWidth()
-        .absolutePadding(8.dp, 38.dp, 0.dp, 0.dp))
+    modifier = Modifier.padding(8.dp, 8.dp, 0.dp, 0.dp))
 }
 
 @Composable
-fun Profile(navController: NavController) {
+fun Navigate1(navController: NavController) {
     Button(
-        onClick = { navController.navigate("friends_list") },
+        onClick = {
+                    navController.navigate("navigate2")
+                  },
         modifier = Modifier
-            .padding(8.dp, 0.dp, 0.dp, 0.dp)
+            .padding(8.dp, 48.dp, 0.dp, 0.dp)
     ) {
-        Text(text = "Navigate next1")
+        Text(text = "Navigate 1")
     }
 }
 
 @Composable
-fun FriendsList(navController: NavController) {
+fun Navigate2(navController: NavController) {
     Button(
-        onClick = { navController.navigate("profile")},
+        onClick = { navController.navigate("navigate1")},
         modifier = Modifier
-            .padding(8.dp, 0.dp, 0.dp, 0.dp)
+            .padding(8.dp, 56.dp, 0.dp, 0.dp)
     ) {
-        Text(text = "Navigate next2")
+        Text(text = "Navigate 2")
     }
+
+    Text(text = "Test",
+        modifier = Modifier.fillMaxWidth()
+            .padding(8.dp, 24.dp, 0.dp, 0.dp))
+
+    Greeting("Android")
 }
 
 @Preview(showBackground = true)
