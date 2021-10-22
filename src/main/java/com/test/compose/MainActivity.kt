@@ -36,8 +36,6 @@ class MainActivity : ComponentActivity() {
                             Navigate2(navController)
                         }
                     }
-
-//                    defaultPreview(navController)
                 }
             }
         }
@@ -52,42 +50,9 @@ fun Greeting(name: String) {
 
 @Composable
 fun Navigate1(navController: NavController) {
-    Button(
-        onClick = {
-                    navController.navigate("navigate2")
-                  },
-        modifier = Modifier
-            .padding(48.dp, 48.dp, 0.dp, 0.dp)
-    ) {
-        Text(text = "Navigate 2")
-    }
-}
-
-@Composable
-fun Navigate2(navController: NavController) {
-    Button(
-        onClick = {
-                    navController.navigate("navigate1")
-                  },
-        modifier = Modifier
-            .padding(18.dp, 56.dp, 0.dp, 0.dp)
-    ) {
-        Text(text = "Navigate 1")
-    }
-
-    Text(text = "Test",
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp, 24.dp, 0.dp, 0.dp))
-
-    Greeting("Android")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun defaultPreview(navController: NavHostController) {
     val materialBlue700= Color(0xFF1976D2)
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = { TopAppBar(title = {Text("TopAppBar")},backgroundColor = materialBlue700)  },
@@ -96,17 +61,48 @@ fun defaultPreview(navController: NavHostController) {
             Text("X")
         } },
         drawerContent = { Text(text = "drawerContent") },
-        content = { Text("BodyContent") },
+        content = {
+            Greeting("Android: content 1")
+            Button(
+                onClick = {
+                    navController.navigate("navigate2")
+                },
+                modifier = Modifier
+                    .padding(48.dp, 48.dp, 0.dp, 0.dp)
+            ) {
+                Text(text = "Navigate 2")
+            }
+
+                  },
         bottomBar = { BottomAppBar(backgroundColor = materialBlue700) { Text("BottomAppBar") } }
     )
+}
 
-    Button(
-        onClick = {
-            navController.navigate("navigate2")
-        },
-        modifier = Modifier
-            .padding(108.dp, 48.dp, 0.dp, 0.dp)
-    ) {
-        Text(text = "Navigate 2")
-    }
+@Composable
+fun Navigate2(navController: NavController) {
+    val materialBlue700= Color(0xFF1976D2)
+    val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
+
+    Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { TopAppBar(title = {Text("TopAppBar")},backgroundColor = materialBlue700)  },
+        floatingActionButtonPosition = FabPosition.End,
+        floatingActionButton = { FloatingActionButton(onClick = {}){
+            Text("X")
+        } },
+        drawerContent = { Text(text = "drawerContent") },
+        content = {
+            Greeting("Android: content 2")
+            Button(
+                onClick = {
+                    navController.navigate("navigate1")
+                },
+                modifier = Modifier
+                    .padding(48.dp, 48.dp, 0.dp, 0.dp))
+            {
+                Text(text = "Navigate 1")
+            }
+                  },
+        bottomBar = { BottomAppBar(backgroundColor = materialBlue700) { Text("BottomAppBar") } }
+    )
 }
