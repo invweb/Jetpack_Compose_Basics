@@ -3,19 +3,21 @@ package com.test.compose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.test.compose.list.row.ItemTypeOne
+import com.test.compose.list.row.ItemTypeTwo
 import com.test.compose.ui.theme.ComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -43,15 +45,35 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
+fun ItemOne(itemTypeOne: ItemTypeOne) {
+    Text(text = itemTypeOne.text)
+    Divider(color = Color.Blue, thickness = 1.dp)
+}
+
+@Composable
+fun ItemTwo(itemTypeTwo: ItemTypeTwo) {
+    Column {
+        Text(text = itemTypeTwo.text)
+        Text(text = itemTypeTwo.description)
+    }
+    Divider(color = Color.Blue, thickness = 1.dp)
+}
+
+@Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name!",
     modifier = Modifier.padding(8.dp, 8.dp, 0.dp, 0.dp))
 }
 
 @Composable
-fun Navigate1(navController: NavController) {
+fun Navigate1(navController: NavController, modifier: Modifier = Modifier) {
     val materialBlue700= Color(0xFF1976D2)
     val scaffoldState = rememberScaffoldState(rememberDrawerState(DrawerValue.Closed))
+
+    val dataItems = listOf(
+        ItemTypeOne("1"),
+        ItemTypeTwo("text", "description")
+    )
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -73,6 +95,23 @@ fun Navigate1(navController: NavController) {
                 Text(text = "Navigate 2")
             }
 
+            LazyColumn(
+                modifier = Modifier
+                    .padding(0.dp, 108.dp, 0.dp, 0.dp)
+            ) {
+                items(items = dataItems, itemContent = { item ->
+                    when(item){
+                        is ItemTypeOne -> {
+                            val itT1: ItemTypeOne = item as ItemTypeOne
+                            ItemOne(itemTypeOne = itT1)
+                        }
+                        is ItemTypeTwo -> {
+                            val itT2: ItemTypeTwo = item as ItemTypeTwo
+                            ItemTwo(itemTypeTwo = itT2)
+                        }
+                    }
+                })
+            }
                   },
         bottomBar = { BottomAppBar(backgroundColor = materialBlue700) { Text("BottomAppBar") } }
     )
