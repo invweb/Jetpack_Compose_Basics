@@ -67,7 +67,7 @@ fun ItemTwo(itemTypeTwo: ItemTypeTwo, navController: NavController) {
 }
 
 @Composable
-fun Item(item: Item) {
+fun ItemTree(item: Item) {
     Column(Modifier.fillMaxWidth()) {
         Text(text = item.text)
         Text(text = item.description)
@@ -77,8 +77,8 @@ fun Item(item: Item) {
 
 @Composable
 fun Greeting(name: String) {
-    Text(text = "Hello $name!",
-    modifier = Modifier.padding(8.dp, 8.dp, 0.dp, 0.dp))
+    Text(text = "Hello\n", modifier = Modifier.padding(8.dp, 8.dp, 0.dp, 0.dp))
+    Text(text = "$name!", modifier = Modifier.padding(8.dp, 26.dp, 0.dp, 0.dp))
 }
 
 @Composable
@@ -96,9 +96,6 @@ fun Navigate1(navController: NavController, modifier: Modifier = Modifier) {
         scaffoldState = scaffoldState,
         topBar = { TopAppBar(title = {Text("TopAppBar")},backgroundColor = materialBlue700)  },
         floatingActionButtonPosition = FabPosition.End,
-        floatingActionButton = { FloatingActionButton(onClick = {}){
-            Text("X")
-        } },
         drawerContent = { Text(text = "drawerContent") },
         content = {
             Greeting("Android: content 1")
@@ -107,7 +104,7 @@ fun Navigate1(navController: NavController, modifier: Modifier = Modifier) {
                     navController.navigate("navigate2")
                 },
                 modifier = Modifier
-                    .padding(48.dp, 48.dp, 0.dp, 0.dp)
+                    .padding(48.dp, 56.dp, 0.dp, 0.dp)
             ) {
                 Text(text = "Navigate 2")
             }
@@ -127,7 +124,8 @@ fun Navigate1(navController: NavController, modifier: Modifier = Modifier) {
                             ItemTwo(itemTypeTwo = itT2, navController)
                         }
                         is Item -> {
-                            Item(item = item)
+                            val itT3: Item = item as Item
+                            ItemTree(item = itT3)
                         }
                     }
                 })
@@ -157,7 +155,7 @@ fun Navigate2(navController: NavController) {
                     navController.navigate("navigate1")
                 },
                 modifier = Modifier
-                    .padding(48.dp, 48.dp, 0.dp, 0.dp))
+                    .padding(48.dp, 56.dp, 0.dp, 0.dp))
             {
                 Text(text = "Navigate 1")
             }
