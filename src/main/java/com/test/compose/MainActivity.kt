@@ -1,9 +1,12 @@
 package com.test.compose
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,6 +19,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.test.compose.list.row.Item
 import com.test.compose.list.row.ItemTypeOne
 import com.test.compose.list.row.ItemTypeTwo
 import com.test.compose.ui.theme.ComposeTheme
@@ -51,12 +55,24 @@ fun ItemOne(itemTypeOne: ItemTypeOne) {
 }
 
 @Composable
-fun ItemTwo(itemTypeTwo: ItemTypeTwo) {
-    Column {
+fun ItemTwo(itemTypeTwo: ItemTypeTwo, navController: NavController) {
+    Column(Modifier.fillMaxWidth().clickable(onClick = {
+        Log.d("", "")
+        navController.popBackStack()
+    })) {
         Text(text = itemTypeTwo.text)
         Text(text = itemTypeTwo.description)
     }
     Divider(color = Color.Blue, thickness = 1.dp)
+}
+
+@Composable
+fun Item(item: Item) {
+    Column(Modifier.fillMaxWidth()) {
+        Text(text = item.text)
+        Text(text = item.description)
+    }
+    Divider(color = Color.Red, thickness = 1.dp)
 }
 
 @Composable
@@ -72,7 +88,8 @@ fun Navigate1(navController: NavController, modifier: Modifier = Modifier) {
 
     val dataItems = listOf(
         ItemTypeOne("1"),
-        ItemTypeTwo("text", "description")
+        ItemTypeTwo("text", "description"),
+        Item("itemText", "itemDescription")
     )
 
     Scaffold(
@@ -107,7 +124,10 @@ fun Navigate1(navController: NavController, modifier: Modifier = Modifier) {
                         }
                         is ItemTypeTwo -> {
                             val itT2: ItemTypeTwo = item as ItemTypeTwo
-                            ItemTwo(itemTypeTwo = itT2)
+                            ItemTwo(itemTypeTwo = itT2, navController)
+                        }
+                        is Item -> {
+                            Item(item = item)
                         }
                     }
                 })
